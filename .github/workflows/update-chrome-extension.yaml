@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-chrome-extension
     env:
-      EXTENSION_ID: something
+      EXTENSION_ID: ibgijeobnlmangpfldpdlchbaiplkbbc
 
     steps:
     - uses: actions/setup-node@v2-beta
