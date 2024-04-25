@@ -20,7 +20,7 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run:  npm ci
+        run: npm ci
 
       - name: Build Next.js app
         run: |
@@ -44,20 +44,20 @@ jobs:
       EXTENSION_ID: nmdhmjebjhcfbjnmdidhngldanikalje
 
     steps:
-    - name: Download bundle artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: chrome-extension-${{ github.sha }}
+      - name: Download bundle artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: chrome-extension-${{ github.sha }}
 
-    - name: Install webstore cli
-      run: |-
-        npm install -g chrome-webstore-upload-cli
+      - name: Install webstore cli
+        run: |-
+          npm install -g chrome-webstore-upload-cli
 
-    - name: Upload step
-      run: |-
-        chrome-webstore-upload upload \\
-          --source chrome-extension-${{ github.event.head_commit.id }}.zip \\
-          --extension-id ${{ env.EXTENSION_ID }} \\
-          --client-id ${{ secrets.WEBSTORE_CLIENT_ID }} \\
-          --client-secret ${{ secrets.WEBSTORE_CLIENT_SECRET }} \\
-          --refresh-token ${{ secrets.WEBSTORE_REFRESH_TOKEN }}
+      - name: Upload step
+        run: |-
+          chrome-webstore-upload upload \\
+            --source chrome-extension-${{ github.event.head_commit.id }}.zip \\
+            --extension-id ${{ env.EXTENSION_ID }} \\
+            --client-id ${{ secrets.WEBSTORE_CLIENT_ID }} \\
+            --client-secret ${{ secrets.WEBSTORE_CLIENT_SECRET }} \\
+            --refresh-token ${{ secrets.WEBSTORE_REFRESH_TOKEN }}
