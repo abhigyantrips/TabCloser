@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && move out/_next out/next && sed -i \"s/_next/next/g\" out/**.html",
+    "build": "next build && move dist/_next dist/next && sed -i \"s/_next/next/g\" dist/**.html",
     "start": "next start",
     "lint": "next lint"
   },
