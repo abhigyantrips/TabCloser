@@ -1,10 +1,15 @@
 {
-  "action": {
-    "default_title": "Tab Closer",
-    "default_popup": "index.html"
-  },
-  "description": "Quite literally, closes a tab as soon as you try to visit a URL you blocked.",
   "manifest_version": 3,
   "name": "Tab Closer",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "description": "Quite literally, closes a tab as soon as you try to visit a URL you blocked.",
+  "icons": {
+    "128": "/icon-white-128.png",
+    "256": "/icon-white-256.png",
+    "512": "/icon-white-512.png"
+  },
+  "action": {
+    "default_title": "Tab Closer",
+    "default_popup": "popup.html"
+  }
 }
