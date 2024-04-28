@@ -7,7 +7,7 @@ import * as React from 'react';
 import { Button } from '@/components/ui/button';
 
 export function ThemeSwitcher() {
-  const { setTheme, theme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
     <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
