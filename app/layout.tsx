@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next';
 
 import '@/styles/globals.css';
 
+import { Footer } from '@/components/footer';
+import { Header } from '@/components/header';
 import { ThemeProvider } from '@/components/theme-provider';
 import { extensionConfig } from '@/extension.config';
 import { fontMono, fontSans } from '@/lib/fonts';
@@ -38,7 +40,9 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="flex-1">{children}</div>
+          <Header />
+          <div className="container flex-1">{children}</div>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
