@@ -4,12 +4,17 @@
   "version": "1.0.0",
   "description": "Quite literally, closes a tab as soon as you try to visit a URL you blocked.",
   "icons": {
-    "128": "/icon-white-128.png",
-    "256": "/icon-white-256.png",
-    "512": "/icon-white-512.png"
+    "64": "/assets/icon-off-64.png",
+    "128": "/assets/icon-off-128.png",
+    "256": "/assets/icon-off-256.png",
+    "512": "/assets/icon-off-512.png"
   },
   "action": {
     "default_title": "Tab Closer",
     "default_popup": "popup.html"
-  }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "options_page": "settings.html"
 }
