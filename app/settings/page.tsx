@@ -4,13 +4,39 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { DataTable } from '@/app/settings/data-table';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { columns } from './columns';
 
 const formSchema = z.object({
   url: z.string().url('Please enter a valid URL.'),
 });
+
+const data: { url: string }[] = [
+  {
+    url: 'https://instagram.com',
+  },
+  {
+    url: 'https://instagram.com',
+  },
+  {
+    url: 'https://instagram.com',
+  },
+  {
+    url: 'https://instagram.com',
+  },
+  {
+    url: 'https://instagram.com',
+  },
+  {
+    url: 'https://instagram.com',
+  },
+  {
+    url: 'https://instagram.com',
+  },
+];
 
 export default function SettingsPage() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -57,6 +83,7 @@ export default function SettingsPage() {
           </Button>
         </form>
       </Form>
+      <DataTable columns={columns} data={data} />
     </div>
   );
 }
