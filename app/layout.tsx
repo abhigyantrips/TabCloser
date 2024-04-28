@@ -15,6 +15,9 @@ export const metadata: Metadata = {
     template: `%s - ${extensionConfig.name}`,
   },
   description: extensionConfig.description,
+  icons: {
+    icon: '/assets/icon-green-512.png',
+  },
 };
 
 export const viewport: Viewport = {
