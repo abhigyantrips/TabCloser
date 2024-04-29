@@ -14,28 +14,15 @@ const formSchema = z.object({
   url: z.string().url('Please enter a valid URL.'),
 });
 
-const data: { url: string }[] = [
-  {
-    url: 'https://instagram.com',
-  },
-  {
-    url: 'https://facebook.com',
-  },
-  {
-    url: 'https://snapchat.com',
-  },
-  {
-    url: 'https://linkedin.com',
-  },
-  {
-    url: 'https://instagram.com',
-  },
-  {
-    url: 'https://instagram.com',
-  },
-  {
-    url: 'https://instagram.com',
-  },
+const data: string[] = [
+  'https://instagram.com',
+  'https://instagram.com',
+  'https://instagram.com',
+  'https://instagram.com',
+  'https://instagram.com',
+  'https://instagram.com',
+  'https://instagram.com',
+  'https://instagram.com',
 ];
 
 export default function SettingsPage() {
@@ -83,7 +70,12 @@ export default function SettingsPage() {
           </Button>
         </form>
       </Form>
-      <DataTable columns={columns} data={data} />
+      <DataTable
+        columns={columns}
+        data={data.map(function (value, index) {
+          return { id: index, url: value };
+        })}
+      />
     </div>
   );
 }
