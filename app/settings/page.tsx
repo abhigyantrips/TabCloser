@@ -19,13 +19,13 @@ const data: { url: string }[] = [
     url: 'https://instagram.com',
   },
   {
-    url: 'https://instagram.com',
+    url: 'https://facebook.com',
   },
   {
-    url: 'https://instagram.com',
+    url: 'https://snapchat.com',
   },
   {
-    url: 'https://instagram.com',
+    url: 'https://linkedin.com',
   },
   {
     url: 'https://instagram.com',
@@ -51,7 +51,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="mx-32 flex min-h-[calc(100vh_-_theme(spacing.32))] flex-col gap-2 p-6">
+    <div className="mx-auto flex min-h-[calc(100vh_-_theme(spacing.32))] max-w-screen-md flex-col gap-2 p-6">
       <div className="space-y-0.5 border-b pb-6">
         <h2 className="text-2xl font-semibold tracking-tight">
           sites to <span className="line-through decoration-primary decoration-4">block</span> close.
