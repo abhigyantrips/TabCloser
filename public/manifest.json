@@ -13,9 +13,20 @@
     "default_title": "Tab Closer",
     "default_popup": "popup.html"
   },
+  "content_scripts": [
+    {
+      "js": [
+        "content-script.ts"
+      ],
+      "matches": [
+        "http: //*/*",
+        "https: //*/*"
+      ]
+    }
+  ],
   "permissions": [
     "storage",
-    "tabs"
+    "webNavigation"
   ],
   "host_permissions": [
     "*://*/*"

@@ -1,8 +1,8 @@
 import { LocalStorageItems } from '@/types';
 
-type Data<T> = T extends 'SITE_BLOCK_URL_LIST'
-  ? LocalStorageItems['SITE_BLOCK_URL_LIST']
-  : LocalStorageItems['SITE_BLOCK_ENABLED'];
+type Data<T> = T extends 'EXTENSION_URL_LIST'
+  ? LocalStorageItems['EXTENSION_URL_LIST']
+  : LocalStorageItems['EXTENSION_ENABLED'];
 
 export async function getLocalStorage<T extends keyof LocalStorageItems>(key: T): Promise<Data<T> | undefined> {
   return chrome.storage.local.get(key).then((value) => value[key]);
