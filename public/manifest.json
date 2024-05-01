@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "js": [
-        "content-script.ts"
+        "/content-script.js"
       ],
       "matches": [
         "http: //*/*",
@@ -24,6 +24,10 @@
       ]
     }
   ],
+  "background": {
+    "service_worker": "/background.js",
+    "type": "module"
+  },
   "permissions": [
     "storage",
     "webNavigation"

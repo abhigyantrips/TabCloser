@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && move dist/_next dist/next && sed -i \"s/_next/next/g\" dist/**.html",
+    "build": "next build && npm run postbuild",
+    "postbuild": "move dist/_next dist/next && sed -i \"s/_next/next/g\" dist/**.html && node ./scripts/remove-inline-scripts.js",
     "start": "next start",
     "lint": "next lint"
   },
