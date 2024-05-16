@@ -1,17 +1,19 @@
-'use client';
+import { Trash } from "lucide-react";
 
-import { ColumnDef } from '@tanstack/react-table';
-import { Trash } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import type { ColumnDef } from "@tanstack/react-table";
 
 export const columns: ColumnDef<{ id: number; url: string }>[] = [
   {
-    id: 'select',
+    id: "select",
     header: ({ table }) => (
       <Checkbox
-        checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          !!(table.getIsSomePageRowsSelected() && "indeterminate")
+        }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
       />
@@ -27,15 +29,18 @@ export const columns: ColumnDef<{ id: number; url: string }>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'url',
-    header: 'URL',
+    accessorKey: "url",
+    header: "URL",
   },
   {
-    id: 'delete',
+    id: "delete",
     enableHiding: false,
     cell: ({ row }) => {
       return (
-        <Button variant="outline" size="icon" className="hover:bg-red-500 [&>*]:hover:stroke-white">
+        <Button
+          variant="outline"
+          size="icon"
+          className="hover:bg-red-500 [&>*]:hover:stroke-white">
           <Trash className="h-5 w-5" />
           <span className="sr-only">Delete Item</span>
         </Button>
