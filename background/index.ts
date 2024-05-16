@@ -1,12 +1,12 @@
-import { getLocalStorage } from '@/lib/storage';
+import { getLocalStorage } from "@/lib/storage";
 
 chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
-  if (details.frameType !== 'outermost_frame') return;
+  if (details.frameType !== "outermost_frame") return;
 
-  const extensionEnabled = getLocalStorage('EXTENSION_ENABLED');
+  const extensionEnabled = getLocalStorage("EXTENSION_ENABLED");
   if (!extensionEnabled) return;
 
-  const siteList = await getLocalStorage('EXTENSION_URL_LIST');
+  const siteList = await getLocalStorage("EXTENSION_URL_LIST");
   if (!siteList) return;
 
   const url = new URL(details.url);
@@ -16,3 +16,5 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
     chrome.tabs.remove(details.tabId);
   }
 });
+
+export {};
