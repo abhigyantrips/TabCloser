@@ -1,3 +1,5 @@
+import pageIcon from "data-base64:@assets/icon.png";
+
 import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export function Header() {
@@ -7,7 +9,7 @@ export function Header() {
         <div className="flex w-full items-center gap-6">
           <div className="flex flex-initial select-none flex-row items-center justify-start p-0">
             <img
-              src="/assets/icon-green-512.png"
+              src={pageIcon}
               alt="Page Icon"
               className="dark:contrast-200 dark:grayscale"
               height={32}
