@@ -1,4 +1,4 @@
-import { LocalStorageItems } from "@/types";
+import type { LocalStorageItems } from "@/types";
 
 type Data<T> = T extends "EXTENSION_URL_LIST"
   ? LocalStorageItems["EXTENSION_URL_LIST"]

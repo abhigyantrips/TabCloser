@@ -22,20 +22,13 @@ import { DataTable } from "@/options/data-table";
 
 import "@/styles/globals.css";
 
+import { useEffect, useState } from "react";
+
+import { getLocalStorage, setLocalStorage } from "@/lib/storage";
+
 const formSchema = z.object({
   url: z.string().url("Please enter a valid URL."),
 });
-
-const data: string[] = [
-  "https://instagram.com",
-  "https://instagram.com",
-  "https://instagram.com",
-  "https://instagram.com",
-  "https://instagram.com",
-  "https://instagram.com",
-  "https://instagram.com",
-  "https://instagram.com",
-];
 
 export default function Options() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,9 +37,23 @@ export default function Options() {
       url: "",
     },
   });
+  const [urlList, setUrlList] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const extensionUrlList = await getLocalStorage("EXTENSION_URL_LIST");
+
+      setUrlList(extensionUrlList ?? []);
+    })();
+  }, []);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const url = new URL(values.url);
+    const newUrlList = [...urlList, url.hostname];
+
+    form.setValue("url", "");
+    setUrlList(newUrlList);
+    setLocalStorage("EXTENSION_URL_LIST", newUrlList);
   }
 
   return (
@@ -97,7 +104,7 @@ export default function Options() {
             </Form>
             <DataTable
               columns={columns}
-              data={data.map(function (value, index) {
+              data={urlList.map(function (value, index) {
                 return { id: index, url: value };
               })}
             />
