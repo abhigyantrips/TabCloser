@@ -1,7 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast, Toaster } from "sonner";
 import { z } from "zod";
 
 import { Footer } from "@/components/footer";
@@ -17,42 +19,57 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { columns } from "@/options/columns";
+import { getLocalStorage, setLocalStorage } from "@/lib/storage";
+import { getColumns } from "@/options/columns";
 import { DataTable } from "@/options/data-table";
 
 import "@/styles/globals.css";
 
-import { useEffect, useState } from "react";
-
-import { getLocalStorage, setLocalStorage } from "@/lib/storage";
+import { Switch } from "@/components/ui/switch";
+import { closeTabsOnEnabled } from "@/lib/tabs";
 
 const formSchema = z.object({
   url: z.string().url("Please enter a valid URL."),
 });
 
 export default function Options() {
+  const [enabled, setEnabled] = useState(false);
+  const [siteList, setSiteList] = useState([]);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       url: "",
     },
   });
-  const [urlList, setUrlList] = useState([]);
 
   useEffect(() => {
     (async () => {
+      const extensionEnabled = await getLocalStorage("EXTENSION_ENABLED");
       const extensionUrlList = await getLocalStorage("EXTENSION_URL_LIST");
 
-      setUrlList(extensionUrlList ?? []);
+      setEnabled(extensionEnabled ?? false);
+      setSiteList(extensionUrlList ?? []);
     })();
   }, []);
 
+  const onDelete = useCallback(
+    (url: string) => {
+      const newUrlList = siteList.filter((value) => value !== url);
+      setLocalStorage("EXTENSION_URL_LIST", newUrlList);
+      setSiteList(newUrlList);
+
+      toast.success("URL removed successfully.");
+    },
+    [siteList]
+  );
+  const columns = useMemo(() => getColumns({ onDelete }), []);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     const url = new URL(values.url);
-    const newUrlList = [...urlList, url.hostname];
+    const newUrlList = [...siteList, url.hostname];
 
     form.setValue("url", "");
-    setUrlList(newUrlList);
+    setSiteList(newUrlList);
     setLocalStorage("EXTENSION_URL_LIST", newUrlList);
   }
 
@@ -62,6 +79,25 @@ export default function Options() {
         <Header />
         <div className="container flex-1">
           <div className="mx-auto flex min-h-[calc(100vh_-_theme(spacing.32))] max-w-screen-md flex-col gap-2 p-6">
+            <div className="flex flex-row items-center justify-between space-y-0.5 border-b pb-6 pt-3">
+              <div>
+                <h2 className="text-2xl font-semibold tracking-tight">
+                  enable extension.
+                </h2>
+                <p className="text-muted-foreground">
+                  this setting will be saved when you close the browser.
+                </p>
+              </div>
+              <Switch
+                checked={enabled}
+                onCheckedChange={async (checked) => {
+                  setEnabled(checked);
+                  setLocalStorage("EXTENSION_ENABLED", checked);
+                  if (checked) await closeTabsOnEnabled();
+                }}
+              />
+            </div>
+
             <div className="space-y-0.5 border-b pb-6">
               <h2 className="text-2xl font-semibold tracking-tight">
                 sites to{" "}
@@ -104,7 +140,7 @@ export default function Options() {
             </Form>
             <DataTable
               columns={columns}
-              data={urlList.map(function (value, index) {
+              data={siteList.map(function (value, index) {
                 return { id: index, url: value };
               })}
             />
@@ -112,6 +148,7 @@ export default function Options() {
         </div>
         <Footer />
       </ThemeProvider>
+      <Toaster />
     </div>
   );
 }
