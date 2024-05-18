@@ -7,6 +7,7 @@ import { getLocalStorage, setLocalStorage } from "@/lib/storage";
 import "@/styles/globals.css";
 
 import { ThemeProvider } from "@/components/theme-provider";
+import { closeTabsOnAdded } from "@/lib/tabs";
 
 export default function Popup() {
   const [hostname, setHostname] = useState("");
@@ -71,15 +72,8 @@ export default function Popup() {
               onClick={async () => {
                 const siteList = await getLocalStorage("EXTENSION_URL_LIST");
                 setLocalStorage("EXTENSION_URL_LIST", [...siteList, hostname]);
-                setRestricted(true);
-
-                const [tab] = await chrome.tabs.query({
-                  active: true,
-                  currentWindow: true,
-                });
-                if (!tab.id) return;
-
-                chrome.tabs.sendMessage(tab.id, { type: "CLOSE" });
+                setAdded(true);
+                await closeTabsOnAdded(hostname);
               }}>
               <Plus className="mr-2 h-5 w-5" /> Add Tab to List
             </Button>

@@ -26,7 +26,7 @@ import { DataTable } from "@/options/data-table";
 import "@/styles/globals.css";
 
 import { Switch } from "@/components/ui/switch";
-import { closeTabsOnEnabled } from "@/lib/tabs";
+import { closeTabsOnAdded, closeTabsOnEnabled } from "@/lib/tabs";
 
 const formSchema = z.object({
   url: z.string().url("Please enter a valid URL."),
@@ -54,23 +54,24 @@ export default function Options() {
 
   const onDelete = useCallback(
     (url: string) => {
-      const newUrlList = siteList.filter((value) => value !== url);
-      setLocalStorage("EXTENSION_URL_LIST", newUrlList);
-      setSiteList(newUrlList);
+      const newSiteList = siteList.filter((value) => value !== url);
+      setLocalStorage("EXTENSION_URL_LIST", newSiteList);
+      setSiteList(newSiteList);
 
       toast.success("URL removed successfully.");
     },
     [siteList]
   );
-  const columns = useMemo(() => getColumns({ onDelete }), []);
+  const columns = useMemo(() => getColumns({ onDelete }), [siteList]);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const url = new URL(values.url);
-    const newUrlList = [...siteList, url.hostname];
+    const newSiteList = [...siteList, url.hostname];
 
     form.setValue("url", "");
-    setSiteList(newUrlList);
-    setLocalStorage("EXTENSION_URL_LIST", newUrlList);
+    setSiteList(newSiteList);
+    setLocalStorage("EXTENSION_URL_LIST", newSiteList);
+    await closeTabsOnAdded(url.hostname);
   }
 
   return (
