@@ -1,7 +1,7 @@
 {
   "name": "tab-closer",
   "displayName": "Tab Closer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Quite literally, closes the tab as soon as you try to visit a URL you blocked.",
   "author": "Abhigyan Trips <contact@abhigyantrips.dev>",
   "homepage": "https://github.com/abhigyantrips/tab-closer",
