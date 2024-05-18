@@ -1,3 +1,5 @@
+import type { ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
+
 import {
   flexRender,
   getCoreRowModel,
@@ -15,8 +17,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import type { ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
